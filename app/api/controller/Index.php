@@ -138,9 +138,9 @@ class Index extends BaseController{
 
     //获取剩余抽奖次数
     public function getLeftJoinTimes(){
-        $openid = !empty($this->param['openid'])?$this->param['openid']:'';
-        if($openid){
-            $user = WxUserModel::get(['openid'=>$openid]);
+        $token = !empty($this->token)?$this->token:'';
+        if($token){
+            $user = WxUserModel::get(['token'=>$this->token]);
             if(empty($user)){
                 return json(['code' =>1,'data'=>['times'=>0]]);
             }
@@ -149,7 +149,7 @@ class Index extends BaseController{
                 return json(['code' =>1,'data'=>$times]);
             }
         }else{
-            return json(['code' =>1004,'msg'=>'请传入参数openid']);
+            return json(['code' =>1004,'msg'=>'请传入参数token']);
         }
     }
 
