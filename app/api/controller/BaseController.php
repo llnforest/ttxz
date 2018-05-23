@@ -28,11 +28,11 @@ class BaseController extends Controller
         $this->imgHost = Config::get('upload.img_url');
 
         if(!Config::get('sys_open')){
-            return die(json_encode(['code' =>1001,'msg'=>'系统维护升级中，请稍候再试！']));
+            return die(json_encode(['code' =>1001,'msg'=>'系统维护升级中，请稍候再试！'],JSON_UNESCAPED_UNICODE));
         }
 
         if(!$this->isOpen()){
-            return die(json_encode(['code' =>1003,'msg'=>'对不起，活动已结束！']));
+            return die(json_encode(['code' =>1003,'msg'=>'对不起，活动已结束！'],JSON_UNESCAPED_UNICODE));
         }
         parent::__construct();
     }
