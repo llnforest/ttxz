@@ -20,6 +20,7 @@ class BaseController extends Controller
     //构造函数
     public function __construct()
     {
+        header('Content-Type: text/html; charset=utf-8');
         $this->request = Request::instance();
         $this->param = $this->request->param();
 //        if(!$this->request->isPost()) die(json_encode(['code' =>1002,'msg'=>'请求方式错误！']));
