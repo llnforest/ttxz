@@ -162,4 +162,7 @@ class Index extends BaseController{
         return json(['code'=>1,'data'=>$this->data]);
     }
 
+    public function test(){
+        return die(json_encode(['code' =>1001,'msg'=>'系统维护升级中，请稍候再试！'],JSON_UNESCAPED_UNICODE));
+    }
 }
