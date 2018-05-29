@@ -76,13 +76,13 @@ class Index extends BaseController{
         if(!empty($user)) return json(['code'=>0,'msg'=>'该手机号码已经注册']);
         //判断发送的时间间隔
         $valCache = MyCache::get(MyCache::$SMSKey.$phone);
-//        $time = isset($valCache['time'])?$valCache['time']:0;
+        $time = isset($valCache['time'])?$valCache['time']:0;
 //        if(time()-$time <= Config::get('sms.SMSTime')) return json(['code'=>0,'msg'=>lang('sms_phone_time_error')]);
 
         //判断当日发送量
         $numCache = MyCache::get(MyCache::$SMSNumKey.$phone);
-//        $day = isset($numCache['day'])?$numCache['day']:'';
-//        $num = isset($numCache['num'])?$numCache['num']:0;
+        $day = isset($numCache['day'])?$numCache['day']:'';
+        $num = isset($numCache['num'])?$numCache['num']:0;
 //        if($day == date('Y-m-d',time())){
 //            if($num >= Config::get('sms.SMSNum')) return json(['code'=>0,'msg'=>lang('sms_phone_num_error')]);
 //        }
