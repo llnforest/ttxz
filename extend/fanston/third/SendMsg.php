@@ -37,7 +37,7 @@ class SendMsg{
         switch($type){
             case 1:
                 //发送验证码
-                $template = "【翼鸟宜居】您好，您本次登录的验证码为[0]，如非本人操作，请忽略！30分钟内有效！";
+                $template = "【恒通科技】[0]（手机动态验证码），该验证码30分钟有效。为了账号安全，请勿泄露给他人。";
                 break;
             default:
                 break;

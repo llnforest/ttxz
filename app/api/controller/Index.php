@@ -6,6 +6,7 @@ namespace app\api\controller;
 use fanston\alidayu\Alidayu;
 use fanston\common\Tools;
 use fanston\third\MyCache;
+use fanston\third\SendMsg;
 use model\WxBannerModel;
 use model\WxPrizeModel;
 use model\WxUserModel;
@@ -50,10 +51,10 @@ class Index extends BaseController{
         if (!empty($param['phone']) && !empty($param['usms'])) {
             $check = self::sCheckSms($param['phone'],$param['usms']);
             if($check['code'] != 1) return json($check);
-            $roleValidate = ['phone|手机号码' => 'require|mobile','headimgurl|头像'=>'require','sex|性别'=>'require'];
+            $roleValidate = ['nickname|昵称'=>'require','phone|手机号码' => 'require|mobile','headimgurl|头像'=>'require','sex|性别'=>'require'];
             $validate = new Validate($roleValidate);
             if(!$validate->check($param))  return json(['code' => 0, 'msg' => $validate->getError()]);
-            $data = ['phone'=>$param['phone'],'headimgurl'=>$param['headimgurl'],'sex'=>$param['sex']];
+            $data = ['nickname'=>$param['nickname'],'phone'=>$param['phone'],'headimgurl'=>$param['headimgurl'],'sex'=>$param['sex']];
             $user = WxUserModel::get(['token'=>$this->token]);
             $user->save($data);
             self::removeSms($param['phone']);
@@ -69,29 +70,28 @@ class Index extends BaseController{
         $validate = new Validate($roleValidate);
         if(!$validate->check($this->param))  return json(['code' => 0, 'msg' => $validate->getError()]);
         $phone = $this->param['phone'];
-
         //判断该手机号是否注册
         $user = WxUserModel::get(['phone'=>$phone]);
-        if(!empty($user)) return array('code'=>0,'msg'=>'该手机号码已经注册');
-
+        if(!empty($user)) return json(['code'=>0,'msg'=>'该手机号码已经注册']);
         //判断发送的时间间隔
         $valCache = MyCache::get(MyCache::$SMSKey.$phone);
         $time = isset($valCache['time'])?$valCache['time']:0;
-        if(time()-$time <= Config::get('sms.SMSTime')) return array('code'=>0,'msg'=>lang('sms_phone_time_error'));
+        if(time()-$time <= Config::get('sms.SMSTime')) return json(['code'=>0,'msg'=>lang('sms_phone_time_error')]);
 
         //判断当日发送量
         $numCache = MyCache::get(MyCache::$SMSNumKey.$phone);
         $day = isset($numCache['day'])?$numCache['day']:'';
         $num = isset($numCache['num'])?$numCache['num']:0;
         if($day == date('Y-m-d',time())){
-            if($num >= Config::get('sms.SMSNum')) return array('code'=>0,'msg'=>lang('sms_phone_num_error'));
+            if($num >= Config::get('sms.SMSNum')) return json(['code'=>0,'msg'=>lang('sms_phone_num_error')]);
 
         }
-
         $code = rand(100000,999999);
         //获取短信模板，发送短信
-        $sms = new Alidayu();
-        $result = $sms->sendSms($phone,$code);
+//        $sms = new Alidayu();
+//        $result = $sms->sendSms($phone,$code);
+        $content = SendMsg::getTemplate(1,['[0]' => $code]);
+        $result = SendMsg::send($phone,$content);
         if($result){
             MyCache::set(MyCache::$SMSNumKey.$phone,array('day'=>date('Y-m-d',time()),'num'=>$num+1),3600*24);
             MyCache::set(MyCache::$SMSKey.$phone,array('sms'=>$code,'time'=>time()),60*6);
