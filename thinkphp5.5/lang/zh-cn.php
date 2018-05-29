@@ -93,5 +93,7 @@ return [
     'sms_data_error'         => '验证码错误',
     'sms_check_success'      => '验证码正确',
     'sms_check_phone_error'      => '手机号码错误',
+    'sms_phone_num_error'      => '该手机号码发送次数已达今日上线',
+    'sms_phone_time_error'      => '发送过于频繁，请稍后再试',
 
 ];

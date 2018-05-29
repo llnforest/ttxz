@@ -76,21 +76,22 @@ class Index extends BaseController{
         if(!empty($user)) return json(['code'=>0,'msg'=>'该手机号码已经注册']);
         //判断发送的时间间隔
         $valCache = MyCache::get(MyCache::$SMSKey.$phone);
-        $time = isset($valCache['time'])?$valCache['time']:0;
-        if(time()-$time <= Config::get('sms.SMSTime')) return json(['code'=>0,'msg'=>lang('sms_phone_time_error')]);
+//        $time = isset($valCache['time'])?$valCache['time']:0;
+//        if(time()-$time <= Config::get('sms.SMSTime')) return json(['code'=>0,'msg'=>lang('sms_phone_time_error')]);
 
         //判断当日发送量
         $numCache = MyCache::get(MyCache::$SMSNumKey.$phone);
-        $day = isset($numCache['day'])?$numCache['day']:'';
-        $num = isset($numCache['num'])?$numCache['num']:0;
-        if($day == date('Y-m-d',time())){
-            if($num >= Config::get('sms.SMSNum')) return json(['code'=>0,'msg'=>lang('sms_phone_num_error')]);
-
-        }
+//        $day = isset($numCache['day'])?$numCache['day']:'';
+//        $num = isset($numCache['num'])?$numCache['num']:0;
+//        if($day == date('Y-m-d',time())){
+//            if($num >= Config::get('sms.SMSNum')) return json(['code'=>0,'msg'=>lang('sms_phone_num_error')]);
+//        }
         $code = rand(100000,999999);
-        //获取短信模板，发送短信
+
+        //阿里云短信接口
 //        $sms = new Alidayu();
 //        $result = $sms->sendSms($phone,$code);
+        //雪豹云短信接口
         $content = SendMsg::getTemplate(1,['[0]' => $code]);
         $result = SendMsg::send($phone,$content);
         if($result){
