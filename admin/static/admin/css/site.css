@@ -9,6 +9,7 @@ html,
 .green{color:#01AAED  }
 .yellow{color:#FFB800 }
 .u-login-btn{width:100%}
+.ivu-col.ivu-col-span-24{display:none;}
 .block{display:block;margin-top:5px}
 .table-image{
     display:block;
