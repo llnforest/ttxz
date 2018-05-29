@@ -56,6 +56,7 @@ class Index extends BaseController{
             if(!$validate->check($param))  return json(['code' => 0, 'msg' => $validate->getError()]);
             $data = ['nickname'=>$param['nickname'],'phone'=>$param['phone'],'headimgurl'=>$param['headimgurl'],'sex'=>$param['sex']];
             $user = WxUserModel::get(['token'=>$this->token]);
+            if(empty($user)) return json(['code'=>0,'msg'=>'token 错误']);
             $user->save($data);
             self::removeSms($param['phone']);
             return json(['code'=>1,'msg'=>'登录成功']);
