@@ -18,7 +18,7 @@ class StartManager:
     def __init__(self):
         self._log = outLog();
         cf = configparser.ConfigParser()
-        cf.read("D:/wamp64/www/ttxz/tools/python/mysql.conf")
+        cf.read("C:/wamp64/www/ttxz/tools/python/mysql.conf")
         self._conn = pymysql.connect(host=cf.get("db","db_host"),
                                      port=int(cf.get("db","db_port")),
                                      user=cf.get("db","db_user"),
