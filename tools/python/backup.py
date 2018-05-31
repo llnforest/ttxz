@@ -10,7 +10,7 @@ class DbBackup:
 
     def __init__(self):
         self._cf = configparser.ConfigParser()
-        self._cf.read("D:/wamp64/www/ttxz/tools/python/mysql.conf")
+        self._cf.read("C:/wamp64/www/ttxz/tools/python/mysql.conf")
         self._dump_file = r"{}{}_backup_{}.sql".format(self._cf.get("backup","backup_dir"),self._cf.get("db","db_database"),time.strftime("%Y%m%d%H"))
         self._old_file = r"{}{}_backup_{}.sql".format(self._cf.get("backup","backup_dir"),self._cf.get("db","db_database"),(datetime.datetime.now()-datetime.timedelta(days=30)).strftime("%Y%m%d%H"))
 
