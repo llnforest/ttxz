@@ -76,6 +76,7 @@ class User extends DefaultController {
             }else{
                 $this->userData->save(['left_share_use' => $this->userData['left_share_use']-1]);
             }
+            WxUserModel::where(['token'=>$this->token])->setInc('join_times',1);
             if($param['status'] == 1) WxUserModel::where(['token'=>$this->token])->setInc('win_times',1);
             return json(['code'=>1,'msg'=>'添加抽奖成功','data'=>['times'=>$this->userData['left_per_use'] + $this->userData['left_share_use']]]);
         }else{
