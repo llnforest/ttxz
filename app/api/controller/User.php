@@ -5,6 +5,7 @@ use fanston\small\WXBizDataCrypt;
 use model\WxJoinRecordModel;
 use model\WxShareRecordModel;
 use model\WxUserModel;
+use think\Config;
 use think\Validate;
 
 class User extends DefaultController {
@@ -87,15 +88,16 @@ class User extends DefaultController {
     //分享成功
     public function shareSuccess(){
         $param = $this->param;
-        $roleValidate = ['scene|分享场景' => 'require'];
+        $roleValidate = ['iv|iv' => 'require','encryptedData|encryptedData'=>'require'];
         $validate = new Validate($roleValidate);
         if(!$validate->check($param))  return json(['code' => 0, 'msg' => $validate->getError()]);
         $share_date = date('Y-m-d',time());
-        $data = ['scene'=>$param['scene'],'user_id'=>$this->userData['id'],'share_date'=>$share_date];
+        $scene = $this->getOpenGid($param['encryptedData'],$param['iv']);
+        $data = ['scene'=>$scene['openGId'],'user_id'=>$this->userData['id'],'share_date'=>$share_date];
         if(empty(WxShareRecordModel::get($data))){
             if(WxShareRecordModel::create($data)){
                 if($this->userData['is_share'] == 0){
-                   $share_count =  WxShareRecordModel::where(['user_id'=>$this->userData['id'],'share_date'=>$share_date])->count();
+                   $share_count =  WxShareRecordModel::where(['user_id'=>$this->userData['id'],'share_date'=>$share_date])->distinct('scene')->count();
                    if($share_count >= 2) $this->userData->save(['is_share' =>1,'left_share_use' => $this->userData['left_share_use'] + 1]);
                 }
                 WxUserModel::where(['token'=>$this->token])->setInc('share_times',1);
@@ -108,20 +110,22 @@ class User extends DefaultController {
         }
     }
 
-    public function getOpenGid(){
-        $appid = 'wxacb20ed50c60bc5a';
-        $sessionKey = '0PzJybcHIEy7gnzBrswZHQ==';
-        $encryptedData="zLQt5x24Ru2I+OG7u4aSxX8lNLNoH9biR/aRZKP1mRKVg9U2lY/TcgaBZIfW0l/ZzzyCuYoZew79yMKbb20VUuGi4+/jQEL9JF/tSEZqmaMt2Ap2kBZjeyeYxm1Ky8CQZpqJwJWg1p8g1hDx7nGNXQ==";
-        $iv = 'ExLIkBr1nYVjyxBRptbs5Q==';
+    private function getOpenGid($encryptedData,$iv){
+        $appid = $this->config['appid'];
+        $sessionKey = $this->userData['session_key'];
 
         $pc = new WXBizDataCrypt($appid, $sessionKey);
         $errCode = $pc->decryptData($encryptedData, $iv, $data );
-        var_dump($errCode);
         if ($errCode == 0) {
-            print($data . "\n");
+            return $data;
         } else {
-            print($errCode . "\n");
+            return false;
         }
+    }
+
+    public function demo(){
+        $share_count =  WxShareRecordModel::where(['user_id'=>$this->userData['id']])->distinct('scene')->count();
+        echo $share_count;
     }
 
 }

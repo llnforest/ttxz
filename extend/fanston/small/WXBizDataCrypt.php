@@ -46,18 +46,14 @@ class WXBizDataCrypt
 			return ErrorCode::$IllegalIv;
 		}
 		$aesIV=base64_decode($iv);
-		echo $aesIV;
 		$aesCipher=base64_decode($encryptedData);
 		$result=openssl_decrypt( $aesCipher, "AES-128-CBC", $aesKey, 1, $aesIV);
 
-		var_dump($result);
-		$dataObj=json_decode( $result );
-		if( $dataObj  == NULL )
-		{
+		$dataObj=json_decode( $result,true);
+		if( $dataObj  == NULL ) {
 			return ErrorCode::$IllegalBuffer;
 		}
-		if( $dataObj->watermark->appid != $this->appid )
-		{
+		if( $dataObj->watermark->appid != $this->appid ) {
 			return ErrorCode::$IllegalBuffer;
 		}
 		$data = $result;
