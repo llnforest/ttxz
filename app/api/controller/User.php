@@ -98,6 +98,7 @@ class User extends DefaultController {
                    $share_count =  WxShareRecordModel::where(['user_id'=>$this->userData['id'],'share_date'=>$share_date])->count();
                    if($share_count >= 2) $this->userData->save(['is_share' =>1,'left_share_use' => $this->userData['left_share_use'] + 1]);
                 }
+                WxUserModel::where(['token'=>$this->token])->setInc('share_times',1);
                 return json(['code'=>0,'msg'=>'添加分享成功','data'=>['times'=>$this->userData['left_per_use'] + $this->userData['left_share_use']]]);
             }else{
                 return json(['code'=>0,'msg'=>'添加分享失败']);
