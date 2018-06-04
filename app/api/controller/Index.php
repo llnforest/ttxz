@@ -29,17 +29,18 @@ class Index extends BaseController{
         $json = json_decode($info,true);//对json数据解码
         if(empty($json['openid']))  return json(['code'=>0,'msg'=>'参数code错误']);
         $user = WxUserModel::get(['openid'=>$json['openid']]);
+        $time = !empty($user)?$user['create_time']:date('Y-m-d H:i:s',time());
+        $signArr = [
+            'openid' => $json['openid'],
+            'session_key' => $json['session_key'],
+            'create_time' => $time,
+            'nonce_str' => Tools::genRandomString()
+        ];
+        $this->data['token'] = Tools::getSign($signArr,Config::get('secret_key'));
         if(empty($user)){
-            $signArr = [
-                'openid' => $json['openid'],
-                'session_key' => $json['session_key'],
-                'create_time' => date('Y-m-d H:i:s',time()),
-                'nonce_str' => Tools::genRandomString()
-            ];
-            $this->data['token'] = Tools::getSign($signArr,Config::get('secret_key'));
             WxUserModel::create(['openid'=>$json['openid'],'token'=>$this->data['token'],'session_key'=> $json['session_key']]);
         }else{
-            $this->data['token'] = $user['token'];
+            $user->save(['token'=>$this->data['token'],'session_key'=> $json['session_key']]);
         }
         return json(['code'=>1,'msg'=>'授权登陆成功','data'=>$this->data]);
 

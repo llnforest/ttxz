@@ -1,10 +1,10 @@
 <?php
 namespace app\api\controller;
 
+use fanston\small\WXBizDataCrypt;
 use model\WxJoinRecordModel;
 use model\WxShareRecordModel;
 use model\WxUserModel;
-use think\Config;
 use think\Validate;
 
 class User extends DefaultController {
@@ -105,6 +105,22 @@ class User extends DefaultController {
             }
         }else{
             return json(['code'=>0,'msg'=>'今日分享对象重复']);
+        }
+    }
+
+    public function getOpenGid(){
+        $appid = 'wxacb20ed50c60bc5a';
+        $sessionKey = '0PzJybcHIEy7gnzBrswZHQ==';
+        $encryptedData="zLQt5x24Ru2I+OG7u4aSxX8lNLNoH9biR/aRZKP1mRKVg9U2lY/TcgaBZIfW0l/ZzzyCuYoZew79yMKbb20VUuGi4+/jQEL9JF/tSEZqmaMt2Ap2kBZjeyeYxm1Ky8CQZpqJwJWg1p8g1hDx7nGNXQ==";
+        $iv = 'ExLIkBr1nYVjyxBRptbs5Q==';
+
+        $pc = new WXBizDataCrypt($appid, $sessionKey);
+        $errCode = $pc->decryptData($encryptedData, $iv, $data );
+        var_dump($errCode);
+        if ($errCode == 0) {
+            print($data . "\n");
+        } else {
+            print($errCode . "\n");
         }
     }
 

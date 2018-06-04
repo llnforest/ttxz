@@ -3,5 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/app/api/controller/BaseController.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/api/controller/DefaultController.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/extend/fanston/small/ErrorCode.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/extend/fanston/small/WXBizDataCrypt.php" charset="UTF-8" />
   </component>
 </project>
