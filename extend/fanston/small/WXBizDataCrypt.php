@@ -56,7 +56,7 @@ class WXBizDataCrypt
 		if( $dataObj->watermark->appid != $this->appid ) {
 			return ErrorCode::$IllegalBuffer;
 		}
-		$data = $result;
+		$data = $dataObj;
 		return ErrorCode::$OK;
 	}
 
