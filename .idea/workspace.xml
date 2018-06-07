@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ea9b5513-7f28-4828-bf43-2be681539995" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/api/controller/Index.php" afterPath="$PROJECT_DIR$/app/api/controller/Index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extend/fanston/small/WXBizDataCrypt.php" afterPath="$PROJECT_DIR$/extend/fanston/small/WXBizDataCrypt.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/api/controller/User.php" afterPath="$PROJECT_DIR$/app/api/controller/User.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -31,8 +29,8 @@
       <file leaf-file-name="User.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/api/controller/User.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="427">
-              <caret line="115" column="0" lean-forward="true" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
+            <state relative-caret-position="581">
+              <caret line="119" column="41" lean-forward="false" selection-start-line="119" selection-start-column="41" selection-end-line="119" selection-end-column="41" />
               <folding>
                 <element signature="e#37#70#0#PHP" expanded="true" />
               </folding>
@@ -257,11 +255,11 @@
         <option value="$PROJECT_DIR$/extend/fanston/xiaochengxu/wxBizDataCrypt.php" />
         <option value="$PROJECT_DIR$/extend/fanston/third/WXBizDataCrypt.php" />
         <option value="$PROJECT_DIR$/extend/fanston/small/ErrorCode.php" />
-        <option value="$PROJECT_DIR$/app/api/controller/User.php" />
         <option value="$PROJECT_DIR$/appadmin/wx/view/user/index.php" />
         <option value="$PROJECT_DIR$/appadmin/wx/view/share_record/index.php" />
         <option value="$PROJECT_DIR$/app/api/controller/Index.php" />
         <option value="$PROJECT_DIR$/extend/fanston/small/WXBizDataCrypt.php" />
+        <option value="$PROJECT_DIR$/app/api/controller/User.php" />
       </list>
     </option>
   </component>
@@ -566,12 +564,12 @@
       <workItem from="1528119183243" duration="446000" />
       <workItem from="1528182872327" duration="3411000" />
       <workItem from="1528246526897" duration="4387000" />
-      <workItem from="1528359540330" duration="1343000" />
+      <workItem from="1528359540330" duration="1579000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="309467000" />
+    <option name="totallyTimeSpent" value="309703000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -962,8 +960,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/api/controller/User.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="115" column="0" lean-forward="true" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
+        <state relative-caret-position="581">
+          <caret line="119" column="41" lean-forward="false" selection-start-line="119" selection-start-column="41" selection-end-line="119" selection-end-column="41" />
           <folding>
             <element signature="e#37#70#0#PHP" expanded="true" />
           </folding>

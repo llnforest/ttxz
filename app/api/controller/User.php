@@ -117,6 +117,7 @@ class User extends DefaultController {
         $pc = new WXBizDataCrypt($appid, $sessionKey);
         $errCode = $pc->decryptData($encryptedData, $iv, $data );
         if ($errCode == 0) {
+            error_log(json_encode($data));
             return $data;
         } else {
             return false;
