@@ -37,7 +37,7 @@ class SendMsg{
         switch($type){
             case 1:
                 //发送验证码
-                $template = "【恒通科技】[0]（手机动态验证码），该验证码30分钟有效。为了账号安全，请勿泄露给他人。";
+                $template = "【天天旋转】[0]（手机动态验证码），该验证码30分钟有效。为了账号安全，请勿泄露给他人。";
                 break;
             default:
                 break;
