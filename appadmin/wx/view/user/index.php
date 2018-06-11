@@ -6,7 +6,7 @@
  <div>
         <div class="cf well form-search row">
 
-            <form  method="get">
+            <form  method="get" id="myForm">
                 <div class="fl">
                     <div class="btn-group layui-form">
                         <select name="status" class="form-control">
@@ -29,6 +29,9 @@
                     </div>
                     <div class="btn-group">
                         <button type="submit" class="btn btn-success">查询</button>
+                        {if checkPath('user/download')}
+                        <button type="button" class="btn btn-success download">下载</button>
+                        {/if}
                     </div>
                 </div>
             </form>
@@ -81,3 +84,12 @@
     <div class="text-center">
         {$page}
     </div>
+<script>
+
+    $(".download").click(function(){
+        url = "{:url('user/download')}?" + $("#myForm").serialize();
+//            "start="+getQueryString('start')+"&end="+getQueryString('end')+"&name="+getQueryString('name')+"&order_a_id="+getQueryString('order_a_id')+"&order_id="+getQueryString('order_id')+"&imei="+getQueryString('imei')+'&status=0';
+        window.location.href = url;
+    });
+
+</script>

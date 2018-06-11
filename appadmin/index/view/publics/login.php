@@ -22,7 +22,7 @@
 </style>
 <div id="app"></div>
 <div class="m-login">
-    <div class="login-head"><img class="logo" src="__PublicAdmin__/images/logo.png">恒通科技管理系统</div>
+    <div class="login-head">后台管理系统</div>
     <form id="login-form" class="layui-form" action="{:Url('publics/login')}" method="post" role="form">
             <div class="layui-form-item field-loginform-username required">
                 <input type="text" class="layui-input" name="name" maxlength="256" placeholder="用户名" value="">
