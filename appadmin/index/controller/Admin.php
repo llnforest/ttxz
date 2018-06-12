@@ -123,7 +123,7 @@ class Admin extends BaseController
     public function password(){
         if($this->request->isPost()){
             $post           = $this->post;
-            $admin = AdminModel::get($this->uid);
+            $admin = AdminModel::get($this->admin['id']);
             if(empty($admin)){
                 return ['code'=>0,'msg'=>lang('sys_param_error')];
             }
