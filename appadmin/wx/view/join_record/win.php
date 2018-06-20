@@ -22,7 +22,7 @@
                         <input name="phone" value="{:input('phone')}" placeholder="手机号" class="form-control"  type="text">
                     </div>
                     <div class="btn-group">
-                        <input name="name" value="{:input('name')}" placeholder="奖品名称" class="form-control"  type="text">
+                        <input name="prize_name" value="{:input('prize_name')}" placeholder="奖品名称" class="form-control"  type="text">
                     </div>
                     <div class="btn-group">
                         <input name="start" value="{:input('start')}" placeholder="中奖起始日期" readonly dom-class="date-start" class="date-time date-start form-control laydate-icon"  type="text">
@@ -52,7 +52,7 @@
                 <tr>
                     <td>{$v.nickname}</td>
                     <td>{$v.phone}</td>
-                    <td>{$v.name}</td>
+                    <td>{$v.prize_name}</td>
                     <td><span class="{$v.status|str_replace=[1,2],['red','blue'],###}">{$v.status|str_replace=[1,2],['未兑奖','已派奖'],###}</span></td>
                     <td>
                         {$v.create_time}

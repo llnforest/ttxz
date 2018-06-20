@@ -3,6 +3,7 @@ namespace app\api\controller;
 
 use fanston\small\WXBizDataCrypt;
 use model\WxJoinRecordModel;
+use model\WxPrizeModel;
 use model\WxShareRecordModel;
 use model\WxUserModel;
 use think\Config;
@@ -44,10 +45,8 @@ class User extends DefaultController {
 
     //获取中奖记录
     public function getWinList(){
-        $this->data['winList'] = WxJoinRecordModel::alias('a')
-            ->join('tp_wx_prize b','a.prize_id = b.id','left')
-            ->where(['a.status'=>['in','1,2'],'a.user_id'=>$this->userData['id']])
-            ->field('a.create_time,b.name')
+        $this->data['winList'] = WxJoinRecordModel::where(['status'=>['in','1,2'],'user_id'=>$this->userData['id']])
+            ->field('create_time,prize_name as name')
             ->select();
         return json(['code'=>1,'data'=>$this->data]);
     }
@@ -68,7 +67,9 @@ class User extends DefaultController {
         $roleValidate = ['prize_id|奖品id' => 'require|number','status|中奖状态'=>'require'];
         $validate = new Validate($roleValidate);
         if(!$validate->check($param))  return json(['code' => 0, 'msg' => $validate->getError()]);
-        $data = ['prize_id'=>$param['prize_id'],'status'=>$param['status'],'user_id'=>$this->userData['id']];
+        $prize = WxPrizeModel::get($param['prize_id']);
+        $param['status'] = $prize['name'] == '谢谢参与'?0:1;
+        $data = ['prize_id'=>$param['prize_id'],'prize_name'=>$prize['name'],'status'=>$param['status'],'user_id'=>$this->userData['id']];
         $times = $this->userData['left_per_use'] + $this->userData['left_share_use'];
         if($times < 1) return json(['code'=>0,'msg'=>'无抽奖次数']);
         if(WxJoinRecordModel::create($data)){

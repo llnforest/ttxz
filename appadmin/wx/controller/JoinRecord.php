@@ -36,15 +36,14 @@ class JoinRecord extends BaseController{
     //中奖记录列表页
     public function win(){
         $orderBy  = 'a.status asc,a.update_time desc';
-        $where  = getWhereParam(['a.status','b.phone','b.nickname'=>'like','c.name'=>'like','a.create_time'=>['start','end']],$this->param);
+        $where  = getWhereParam(['a.status','b.phone','b.nickname'=>'like','a.prize_name'=>'like','a.create_time'=>['start','end']],$this->param);
         if(empty($where['a.status'])) $where['a.status'] = ['in','1,2'];
         if(!empty($this->param['order'])) $orderBy = $this->param['order'].' '.$this->param['by'];
 
         $data['list'] = WxJoinRecordModel::alias('a')
             ->join('tp_wx_user b','a.user_id = b.id','left')
-            ->join('tp_wx_prize c','a.prize_id = c.id','left')
             ->where($where)
-            ->field('a.*,b.nickname,b.phone,c.name')
+            ->field('a.*,b.nickname,b.phone')
             ->order($orderBy)
             ->paginate($this->config_page,'',['query'=>$this->param]);
         $data['page']   = $data['list']->render();
